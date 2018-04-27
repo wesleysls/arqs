@@ -1,16 +1,60 @@
 package br.unibh.loja.entidades;
 import java.util.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
+
+@Entity
+@Table(name="tb_cliente", uniqueConstraints = {
+	    @UniqueConstraint(columnNames = { "nome"}),
+	    @UniqueConstraint(columnNames = { "cpf"})
+	})
+
 public class Cliente {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(length=100, nullable=false)
 	private String nome;
+	
+	@Column(length=15, nullable=false)
 	private String login;
+	
+	@Column(length=100, nullable=false)
 	private String senha;
+	
+	@Column(length=100, nullable=false)
 	private String perfil;
+	
+	@Column(length=11, nullable=false)
 	private String cpf;
+	
+	@Column(length=14, nullable=false)
 	private String telefone;
+	
+	@Column(length=100, nullable=false)
 	private String email;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="data_nascimento", nullable=false)
 	private Date dataNascimento;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="data_cadastro", nullable=false)
 	private Date dataCadastro;
+	
+	@Version
+	private long version;
 	
 	
 	public Cliente(Long id, String nome, String login, String senha, String perfil, String cpf, String telefone,
@@ -31,6 +75,16 @@ public class Cliente {
 	
 	public Cliente() {
 		super();
+	}
+
+
+	public long getVersion() {
+		return version;
+	}
+
+
+	public void setVersion(long version) {
+		this.version = version;
 	}
 
 

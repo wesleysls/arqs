@@ -1,8 +1,32 @@
 package br.unibh.loja.entidades;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
+
+@Entity
+@Table(name="tb_categoria", uniqueConstraints = {
+	    @UniqueConstraint(columnNames = { "descricao"})
+	})
 
 public class Categoria {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(length=100, nullable=false)
 	private String descricao;
+	
+	@Version
+	private long version;
 	
 	
 	public Categoria(Long id, String descricao) {
@@ -12,6 +36,16 @@ public class Categoria {
 	}
 	
 	
+	public long getVersion() {
+		return version;
+	}
+
+
+	public void setVersion(long version) {
+		this.version = version;
+	}
+
+
 	public Categoria() {
 		super();
 	}

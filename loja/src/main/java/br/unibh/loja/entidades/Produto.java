@@ -1,14 +1,60 @@
 package br.unibh.loja.entidades;
 import java.math.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
+
+@Entity
+@Table(name="tb_produto", uniqueConstraints = {
+	    @UniqueConstraint(columnNames = { "nome"})
+	})
+
 public class Produto {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(length=100, nullable=false)
 	private String nome;
+	
+	@Column(length=4000, nullable=false)
 	private String descricao;
+	
+	@ManyToOne
+	@JoinColumn(name="id_categoria", referencedColumnName="id")
 	private Categoria categoria;
+	
+	@Column(precision=14, scale=2, nullable=false)
 	private BigDecimal preco;
+	
+	@Column(length=100, nullable=false)
 	private String fabricante;
 	
+	@Version
+	private long version;
 	
+	
+	
+	
+	public long getVersion() {
+		return version;
+	}
+
+
+	public void setVersion(long version) {
+		this.version = version;
+	}
+
+
 	public Produto(Long id, String nome, String descricao, Categoria categoria, BigDecimal preco, String fabricante) {
 		super();
 		this.id = id;
