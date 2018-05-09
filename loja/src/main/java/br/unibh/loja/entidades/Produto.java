@@ -12,6 +12,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="tb_produto", uniqueConstraints = {
@@ -23,19 +28,29 @@ public class Produto {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank
+	@Size(max=100)
+	@Pattern(regexp="[A-zÀ-ú.´ ]*", message="Caracteres permitidos: letras, espaços, ponto e aspas simples")
 	@Column(length=100, nullable=false)
 	private String nome;
 	
+	@NotBlank
+	@Size( max=4000)
+	@Pattern(regexp="[A-zÀ-ú -/.']*", message="Caracteres permitidos: letras, espaços, ponto, barra, traço e aspas simples")
 	@Column(length=4000, nullable=false)
 	private String descricao;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name="id_categoria", referencedColumnName="id")
 	private Categoria categoria;
 	
+	@NotNull
 	@Column(precision=14, scale=2, nullable=false)
 	private BigDecimal preco;
 	
+	@Size(max=100)
+	@Pattern(regexp="[A-zÀ-ú.´ ]*", message="Caracteres permitidos: letras, espaços, ponto e aspas simples")
 	@Column(length=100, nullable=false)
 	private String fabricante;
 	
