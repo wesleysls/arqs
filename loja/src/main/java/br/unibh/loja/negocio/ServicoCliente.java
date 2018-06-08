@@ -14,9 +14,11 @@ import br.unibh.loja.entidades.Cliente;
 
 @Stateless
 @LocalBean
-public class servicoCliente implements DAO<Cliente, Long> {
+public class ServicoCliente implements DAO<Cliente, Long> {
+	
 	@Inject
 	EntityManager em;
+	
 	@Inject
 	private Logger log;
 
@@ -26,9 +28,11 @@ public class servicoCliente implements DAO<Cliente, Long> {
 		DateTime hoje = new DateTime();
 		DateTime cadastro = new DateTime(t.getDataCadastro());
 		int dias = Days.daysBetween(cadastro, hoje).getDays();
-		
-		if (t.getPerfil().equals("Standart") && dias < 365) {
+
+		if (t.getPerfil().equals("Standard") && dias < 365) {
 			em.persist(t);
+		} else {
+			throw new Exception("o cliente precisa ser criado com o perfil Standard");
 		}
 		return t;
 	}
@@ -40,14 +44,14 @@ public class servicoCliente implements DAO<Cliente, Long> {
 		DateTime cadastro = new DateTime(t.getDataCadastro());
 		int dias = Days.daysBetween(cadastro, hoje).getDays();
 
-		if (t.getPerfil().equals("Standart") && dias < 365) {
+		if (t.getPerfil().equals("Standard") && dias < 365) {
 			em.merge(t);
-		}
-		if ((t.getPerfil().equals("Standart")||t.getPerfil().equals("Premium")) && (dias >= 365 &&  dias <= 5 * 365)) {
+		} else if ((t.getPerfil().equals("Standard")||t.getPerfil().equals("Premium")) && (dias >= 365 &&  dias <= 5 * 365)) {
 			em.merge(t);
-		}
-		if ((t.getPerfil().equals("Standart")||t.getPerfil().equals("Standart")||t.getPerfil().equals("Gold") ) && (dias > 5 * 365)) {
+		} else if ((t.getPerfil().equals("Standard")||t.getPerfil().equals("Standard")||t.getPerfil().equals("Gold") ) && (dias > 5 * 365)) {
 			em.merge(t);
+		} else {
+			throw new Exception("sdfsdfsd");
 		}
 		return t;
 	}

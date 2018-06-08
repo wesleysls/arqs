@@ -52,7 +52,7 @@ public class TestValidation {
 		for (ConstraintViolation<Cliente> c : constraintViolations) {
 			System.out.println(" Erro de Validacao: " + c.getMessage());
 		}
-		Assert.assertEquals(0, constraintViolations.size());
+		Assert.assertEquals(1, constraintViolations.size());
 	}
 	
 	@Test
@@ -76,7 +76,7 @@ public class TestValidation {
 		for (ConstraintViolation<Categoria> c : constraintViolations) {
 			System.out.println(" Erro de Validacao: " + c.getMessage());
 		}
-		Assert.assertEquals(0, constraintViolations.size());
+		Assert.assertEquals(1, constraintViolations.size());
 	}
 	
 	@Test
@@ -104,7 +104,7 @@ public class TestValidation {
 		for (ConstraintViolation<Produto> c : constraintViolations) {
 			System.out.println(" Erro de Validacao: " + c.getMessage());
 		}
-		Assert.assertEquals(0, constraintViolations.size());
+		Assert.assertEquals(1, constraintViolations.size());
 	}
 
 }

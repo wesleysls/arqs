@@ -24,13 +24,14 @@ import br.unibh.loja.util.Resources;
 
 @RunWith(Arquillian.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class testeServicoCategoria {
+public class TesteServicoCategoria {
+	
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		// Cria o pacote que vai ser instalado no Wildfly para realizacao dos testes
 		return ShrinkWrap.create(WebArchive.class, "testeloja.war")
 				.addClasses(Cliente.class, Produto.class, Categoria.class, Resources.class, DAO.class,
-						servicoCategoria.class)
+						ServicoCategoria.class)
 				.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
@@ -38,14 +39,14 @@ public class testeServicoCategoria {
 	// Realiza as injecoes com CDI
 	@Inject
 	private Logger log;
+	
 	@Inject
-	private servicoCategoria sc;
+	private ServicoCategoria sc;
 
 	@Test
 	public void teste01_inserirSemErro() throws Exception {
 		log.info("============> Iniciando o teste " + Thread.currentThread().getStackTrace()[1].getMethodName());
-		long l = 1;
-		Categoria o = new Categoria(l, "categoria");
+		Categoria o = new Categoria(null, "categoria");
 		sc.insert(o);
 		Categoria aux = (Categoria) sc.findByName("categoria").get(0);
 		assertNotNull(aux);
@@ -56,11 +57,10 @@ public class testeServicoCategoria {
 	public void teste02_inserirComErro() throws Exception {
 		log.info("============> Iniciando o teste " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		try {
-			long l = 1;
-			Categoria o = new Categoria(l, "");
+			Categoria o = new Categoria(null, "");
 			sc.insert(o);
 		} catch (Exception e) {
-			assertTrue(checkString(e, "não pode ser nulo ou vazio"));
+			assertTrue(checkString(e, "Não pode estar em branco"));
 		}
 		log.info("============> Finalizando o teste " + Thread.currentThread().getStackTrace()[1].getMethodName());
 	}

@@ -71,12 +71,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
-			<version>2.2.4</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.jboss.arquillian.junit</groupId>
 			<artifactId>arquillian-junit-container</artifactId>
 			<scope>test</scope>
@@ -86,17 +80,9 @@
 			<artifactId>jta</artifactId>
 			<version>1.1</version>
 		</dependency>
-
 		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
-			<version>2.2.4</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.web</groupId>
-			<artifactId>javax.el</artifactId>
-			<version>2.2.4</version>
+			<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -145,7 +131,7 @@
 			<dependencies>
 				<dependency>
 					<groupId>org.wildfly.arquillian</groupId>
-					<artifactId>wildfly-arquillian-containerremote</artifactId>
+					<artifactId>wildfly-arquillian-container-remote</artifactId>
 					<version>2.1.0.Final</version>
 					<scope>test</scope>
 				</dependency>

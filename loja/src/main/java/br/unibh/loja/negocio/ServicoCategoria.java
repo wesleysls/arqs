@@ -6,47 +6,49 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import br.unibh.loja.entidades.Produto;
+import br.unibh.loja.entidades.Categoria;
 
 @Stateless
 @LocalBean
-public class servicoProduto implements DAO<Produto, Long> {
+public class ServicoCategoria implements DAO<Categoria, Long> {
+	
 	@Inject
 	EntityManager em;
+	
 	@Inject
 	private Logger log;
 
-	public Produto insert(Produto t) throws Exception {
+	public Categoria insert(Categoria t) throws Exception {
 		log.info("Persistindo " + t);
 		em.persist(t);
 		return t;
 	}
 
-	public Produto update(Produto t) throws Exception {
+	public Categoria update(Categoria t) throws Exception {
 		log.info("Atualizando " + t);
 		return em.merge(t);
 	}
 
-	public void delete(Produto t) throws Exception {
+	public void delete(Categoria t) throws Exception {
 		log.info("Removendo " + t);
 		Object c = em.merge(t);
 		em.remove(c);
 	}
 
-	public Produto find(Long k) throws Exception {
+	public Categoria find(Long k) throws Exception {
 		log.info("Encontrando pela chave " + k);
-		return em.find(Produto.class, k);
+		return em.find(Categoria.class, k);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Produto> findAll() throws Exception {
+	public List<Categoria> findAll() throws Exception {
 		log.info("Encontrando todos os objetos");
-		return em.createQuery("from Produto").getResultList();
+		return em.createQuery("from Categoria").getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Produto> findByName(String name) throws Exception {
+	public List<Categoria> findByName(String name) throws Exception {
 		log.info("Encontrando o " + name);
-		return em.createNamedQuery("Produto.findByName").setParameter("nome", "%" + name + "%").getResultList();
+		return em.createNamedQuery("Categoria.findByName").setParameter("nome", "%" + name + "%").getResultList();
 	}
 }
